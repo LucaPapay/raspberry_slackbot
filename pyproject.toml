@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "raspberry-slackbot"
+version = "0.1.0"
+description = ""
+authors = ["Luca Papay <luca.papay99@gmail.com>"]
+readme = "README.md"
+packages = [{include = "raspberry_slackbot"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+slack-bolt = "^1.18.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
