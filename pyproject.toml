@@ -9,6 +9,7 @@ packages = [{include = "raspberry_slackbot"}]
 [tool.poetry.dependencies]
 python = "^3.9"
 slack-bolt = "^1.18.1"
+selenium = "^4.18.1"
 
 
 [build-system]
