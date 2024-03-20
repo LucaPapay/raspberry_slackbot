@@ -1,3 +1,5 @@
+from time import sleep
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -8,7 +10,6 @@ import config
 class SeleniumDriver:
     def __init__(self):
         self.start_driver()
-        self.driver.get("https://www.reebuild.com")
         self.logged_in = False
         self.in_meeting = False
 
@@ -25,6 +26,7 @@ class SeleniumDriver:
 
         self.driver = webdriver.Chrome(options=opt)
         self.driver.get("https://www.reebuild.com")
+        self.driver.fullscreen_window()
         self.logged_in = False
         self.in_meeting = False
 
@@ -114,11 +116,14 @@ class SeleniumDriver:
         full_screen = self.driver.find_element(By.XPATH, '/html/body/div[3]/div/ul/li[5]').click()
 
 
+        # wait 2 seconds
+        sleep(2)
 
         # selenium driver send tab enter to close the safety warning
         action_chain = webdriver.ActionChains(self.driver)
-        action_chain.send_keys("\ue004").perform()
-        action_chain.send_keys("\ue007").perform()
+        action_chain.send_keys("\ue00C").perform()
+
+        self.full_screen()
 
 
 if __name__ == "__main__":
