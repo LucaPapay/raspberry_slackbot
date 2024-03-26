@@ -1,9 +1,8 @@
-from time import sleep
-
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+
 
 import config
 
@@ -11,7 +10,7 @@ import config
 class SeleniumDriver:
     def __init__(self):
         self.start_driver()
-        self.driver.fullscreen_window()
+        self.driver.get("https://www.reebuild.com")
         self.logged_in = False
         self.in_meeting = False
 
@@ -43,9 +42,7 @@ class SeleniumDriver:
             self.in_meeting = False
         if not url.startswith("http"):
             url = "http://" + url
-        self.driver.fullscreen_window()
         self.driver.get(url)
-        self.driver.fullscreen_window()
 
     def google_login(self, mail_address, password):
         # restart the driver
@@ -91,16 +88,15 @@ class SeleniumDriver:
 
     def configure_meet(self):
         privacy_settings = self.driver.find_element(By.XPATH,
-                                                    '/html/body/div[1]/c-wiz/div[1]/div/div[24]/div[3]/div[10]/div/div/div[3]/div/div[5]/div/div/span/button').click()
+                                                    '//*[@id="yDmH0d"]/c-wiz/div[1]/div/div[24]/div[3]/div[10]/div/div/div[3]/div/div[5]/div/div/span/button').click()
+
         open_to_all = self.driver.find_element(By.XPATH,
-                                               '/html/body/div[1]/c-wiz/div[1]/div/div[24]/div[3]/div[4]/div[2]/div/div[2]/div/div[2]/div/div/div[5]/div[3]/div[2]/div[1]/div[1]/div/input').click()
+                                               '//*[@id="yDmH0d"]/c-wiz/div[1]/div/div[24]/div[3]/div[4]/div[2]/div/div[2]/div/div[2]/div/div/div[5]/div[3]/div[2]/div[1]/div[1]').click()
+
         privacy_settings = self.driver.find_element(By.XPATH,
-                                                    '/html/body/div[1]/c-wiz/div[1]/div/div[24]/div[3]/div[10]/div/div/div[3]/div/div[5]/div/div/span/button').click()
+                                                    '//*[@id="yDmH0d"]/c-wiz/div[1]/div/div[24]/div[3]/div[10]/div/div/div[3]/div/div[5]/div/div/span/button').click()
 
-        #camera = self.driver.find_element(By.XPATH, '/html/body/div[1]/c-wiz/div[1]/div/div[24]/div[3]/div[10]/div/div/div[2]/div/div[2]/div/span/button').click()
-        #no_camera = self.driver.find_element(By.XPATH, '/html/body/div[1]/div[4]/div[2]/div/div[2]/button').click()
-		
-
+        camera = self.driver.find_element(By.XPATH, '/html/body/div[1]/c-wiz/div[1]/div/div[24]/div[3]/div[10]/div/div/div[2]/div/div[2]/div/span/button').click()
 
         notification = self.driver.find_element(By.XPATH, '/html/body/div[1]/c-wiz/div[2]/div[1]/button').click()
 
@@ -110,16 +106,9 @@ class SeleniumDriver:
         layout = self.driver.find_element(By.XPATH, '/html/body/div[3]/div/ul/li[4]').click()
 
         spotlight = self.driver.find_element(By.XPATH, '/html/body/div[1]/div[4]/div[2]/div/div[2]/div[2]/label[3]/div/div/input').click()
-        
-        # wait 2 seconds
-        sleep(2)
 
         # selenium driver send esc key to close the settings
         action_chain = webdriver.ActionChains(self.driver)
-        action_chain.send_keys("\ue00C").perform()
-        sleep(0.1)
-        action_chain.send_keys("\ue00C").perform()
-        sleep(0.1)
         action_chain.send_keys("\ue00C").perform()
 
         dot_settings = self.driver.find_element(By.XPATH,
@@ -128,15 +117,11 @@ class SeleniumDriver:
         full_screen = self.driver.find_element(By.XPATH, '/html/body/div[3]/div/ul/li[5]').click()
 
 
-        # wait 2 seconds
-        sleep(2)
 
         # selenium driver send tab enter to close the safety warning
         action_chain = webdriver.ActionChains(self.driver)
-        action_chain.send_keys("\ue00C").perform()
-        
-        sleep(2)
-        self.driver.fullscreen_window()
+        action_chain.send_keys("\ue004").perform()
+        action_chain.send_keys("\ue007").perform()
 
 
 if __name__ == "__main__":
