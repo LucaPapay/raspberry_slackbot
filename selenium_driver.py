@@ -76,8 +76,8 @@ class SeleniumDriver:
                 ele.click()
 
         # click on New Meeting button
-        self.driver.find_element(By.XPATH, '//*[@id="yDmH0d"]/c-wiz/div/div[4]/div[1]/div/div[1]/div[3]/div/div[1]/div[1]/div/button').click()
-        self.driver.find_element(By.XPATH, '//*[@id="yDmH0d"]/c-wiz/div/div[4]/div[1]/div/div[1]/div[3]/div/div[1]/div[2]/div/ul/li[2]').click()
+        self.driver.find_element(By.XPATH, '/html/body/c-wiz/div/div[5]/div[1]/div/div/div[1]/div[3]/div/div[1]/div[1]/div/button').click()
+        self.driver.find_element(By.XPATH, '/html/body/c-wiz/div/div[5]/div[1]/div/div/div[1]/div[3]/div/div[1]/div[2]/div/ul/li[2]').click()
 
         # wait until hs= is not in the url anymore
         while "hs=" in self.driver.current_url:
@@ -90,12 +90,20 @@ class SeleniumDriver:
         return self.driver.current_url
 
     def configure_meet(self):
+        sleep(3)
+        # selenium driver send esc key to close the settings
+        action_chain = webdriver.ActionChains(self.driver)
+        action_chain.send_keys("\ue00C").perform()
+        sleep(0.1)
+        action_chain.send_keys("\ue00C").perform()
+        sleep(0.1)
+        action_chain.send_keys("\ue00C").perform()
         privacy_settings = self.driver.find_element(By.XPATH,
-                                                    '/html/body/div[1]/c-wiz/div[1]/div/div[24]/div[3]/div[10]/div/div/div[3]/div/div[5]/div/div/span/button').click()
+                                                    '/html/body/div[1]/c-wiz/div[1]/div/div[25]/div[3]/div[11]/div/div/div[3]/div/div[6]/div/div/span/button').click()
         open_to_all = self.driver.find_element(By.XPATH,
-                                               '/html/body/div[1]/c-wiz/div[1]/div/div[24]/div[3]/div[4]/div[2]/div/div[2]/div/div[2]/div/div/div[5]/div[3]/div[2]/div[1]/div[1]/div/input').click()
+                                               '/html/body/div[1]/c-wiz/div[1]/div/div[25]/div[3]/div[5]/div[2]/div/div[2]/div/div[2]/div/div/div[5]/div[3]/div/div[1]/div[1]/div/input').click()
         privacy_settings = self.driver.find_element(By.XPATH,
-                                                    '/html/body/div[1]/c-wiz/div[1]/div/div[24]/div[3]/div[10]/div/div/div[3]/div/div[5]/div/div/span/button').click()
+                                                    '/html/body/div[1]/c-wiz/div[1]/div/div[25]/div[3]/div[11]/div/div/div[3]/div/div[6]/div/div/span/button').click()
 
         #camera = self.driver.find_element(By.XPATH, '/html/body/div[1]/c-wiz/div[1]/div/div[24]/div[3]/div[10]/div/div/div[2]/div/div[2]/div/span/button').click()
         #no_camera = self.driver.find_element(By.XPATH, '/html/body/div[1]/div[4]/div[2]/div/div[2]/button').click()
@@ -105,11 +113,11 @@ class SeleniumDriver:
         notification = self.driver.find_element(By.XPATH, '/html/body/div[1]/c-wiz/div[2]/div[1]/button').click()
 
         dot_settings = self.driver.find_element(By.XPATH,
-                                                '/html/body/div[1]/c-wiz/div[1]/div/div[24]/div[3]/div[10]/div/div/div[2]/div/div[7]/div[5]/div[1]/span/button').click()
+                                                '/html/body/div[1]/c-wiz/div/div/div[25]/div[3]/div[11]/div/div/div[2]/div/div[7]/div[5]/div[1]/span/button').click()
 
-        layout = self.driver.find_element(By.XPATH, '/html/body/div[3]/div/ul/li[4]').click()
+        layout = self.driver.find_element(By.XPATH, '/html/body/div[3]/div/div/ul/li[4]').click()
 
-        spotlight = self.driver.find_element(By.XPATH, '/html/body/div[1]/div[4]/div[2]/div/div[2]/div[2]/label[3]/div/div/input').click()
+        spotlight = self.driver.find_element(By.XPATH, '/html/body/div[2]/div[4]/div[2]/div/div[2]/div/div[2]/div/label[3]/div/div/input').click()
         
         # wait 2 seconds
         sleep(2)
@@ -123,9 +131,9 @@ class SeleniumDriver:
         action_chain.send_keys("\ue00C").perform()
 
         dot_settings = self.driver.find_element(By.XPATH,
-                                                '/html/body/div[1]/c-wiz/div[1]/div/div[24]/div[3]/div[10]/div/div/div[2]/div/div[7]/div[5]/div[1]/span/button').click()
+                                                '/html/body/div[1]/c-wiz/div/div/div[25]/div[3]/div[11]/div/div/div[2]/div/div[7]/div[5]/div[1]/span/button').click()
 
-        full_screen = self.driver.find_element(By.XPATH, '/html/body/div[3]/div/ul/li[5]').click()
+        full_screen = self.driver.find_element(By.XPATH, '/html/body/div[3]/div/div/ul/li[5]').click()
 
 
         # wait 2 seconds
