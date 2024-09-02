@@ -1,11 +1,11 @@
 from time import sleep
 
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
 from selenium import webdriver
+from selenium.webdriver import ActionChains
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-
-import config
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 class SeleniumDriver:
@@ -46,6 +46,38 @@ class SeleniumDriver:
         self.driver.fullscreen_window()
         self.driver.get(url)
         self.driver.fullscreen_window()
+
+    def open_jitbit(self, url):
+        from selenium.webdriver.support import expected_conditions as EC
+        # Navigate to the specified URL
+        self.driver.get(url)
+
+        # Maximize the window to ensure video controls are visible
+        self.driver.fullscreen_window()
+
+        # Wait for the video element to be clickable
+        video_element = WebDriverWait(self.driver, 10).until(EC.element_to_be_clickable((By.ID, "localVideo")))
+
+        # Use ActionChains to click the video to simulate user interaction
+        ActionChains(self.driver).move_to_element(video_element).click().perform()
+
+        # Add a slight delay to ensure the browser processes the click
+        sleep(1)
+
+        # Execute JavaScript to make the video go fullscreen
+        self.driver.execute_script("""
+            var video = arguments[0];
+            if (video.requestFullscreen) {
+                video.requestFullscreen();
+            } else if (video.webkitRequestFullscreen) { /* Safari */
+                video.webkitRequestFullscreen();
+            } else if (video.msRequestFullscreen) { /* IE11 */
+                video.msRequestFullscreen();
+            }
+        """, video_element)
+
+        # Optional: Add a delay to observe the fullscreen effect
+        sleep(5)
 
     def google_login(self, mail_address, password):
         # restart the driver
@@ -105,10 +137,8 @@ class SeleniumDriver:
         privacy_settings = self.driver.find_element(By.XPATH,
                                                     '/html/body/div[1]/c-wiz/div[1]/div/div[25]/div[3]/div[11]/div/div/div[3]/div/div[6]/div/div/span/button').click()
 
-        #camera = self.driver.find_element(By.XPATH, '/html/body/div[1]/c-wiz/div[1]/div/div[24]/div[3]/div[10]/div/div/div[2]/div/div[2]/div/span/button').click()
-        #no_camera = self.driver.find_element(By.XPATH, '/html/body/div[1]/div[4]/div[2]/div/div[2]/button').click()
-		
-
+        # camera = self.driver.find_element(By.XPATH, '/html/body/div[1]/c-wiz/div[1]/div/div[24]/div[3]/div[10]/div/div/div[2]/div/div[2]/div/span/button').click()
+        # no_camera = self.driver.find_element(By.XPATH, '/html/body/div[1]/div[4]/div[2]/div/div[2]/button').click()
 
         notification = self.driver.find_element(By.XPATH, '/html/body/div[1]/c-wiz/div[2]/div[1]/button').click()
 
@@ -118,7 +148,7 @@ class SeleniumDriver:
         layout = self.driver.find_element(By.XPATH, '/html/body/div[3]/div/div/ul/li[4]').click()
 
         spotlight = self.driver.find_element(By.XPATH, '/html/body/div[2]/div[4]/div[2]/div/div[2]/div/div[2]/div/label[3]/div/div/input').click()
-        
+
         # wait 2 seconds
         sleep(2)
 
@@ -135,19 +165,17 @@ class SeleniumDriver:
 
         full_screen = self.driver.find_element(By.XPATH, '/html/body/div[3]/div/div/ul/li[5]').click()
 
-
         # wait 2 seconds
         sleep(2)
 
         # selenium driver send tab enter to close the safety warning
         action_chain = webdriver.ActionChains(self.driver)
         action_chain.send_keys("\ue00C").perform()
-        
+
         sleep(2)
         self.driver.fullscreen_window()
 
 
 if __name__ == "__main__":
     driver = SeleniumDriver()
-    driver.google_login(config.google_mail, config.google_password)
-    driver.start_meeting()
+    driver.open_jitbit("https://www.jitbit.com/screensharing/#45819368197744156389000000953674")

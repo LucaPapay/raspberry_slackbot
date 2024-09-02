@@ -23,6 +23,19 @@ def start_app():
         else:
             ack(f"Hi <@{user_id}>! I couldn't find a link in your message.")
 
+    @app.command("/jitbit")
+    def handle_jitbit_command(ack, body, logger):
+        logger.info(body)
+        user_id = body["user_id"]
+        text = body["text"]
+        link = get_first_url_in_string(text)
+        if link:
+            ack(f"Hi <@{user_id}>! I found a link: {link}!")
+            selenium_driver.open_jitbit(link)
+
+        else:
+            ack(f"Hi <@{user_id}>! I couldn't find a link in your message.")
+
     @app.command("/share-screen")
     def handle_start_meeting_command(ack, body, logger):
         logger.info(body)
