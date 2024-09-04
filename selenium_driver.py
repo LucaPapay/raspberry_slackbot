@@ -25,7 +25,7 @@ class SeleniumDriver:
                                         "profile.default_content_setting_values.media_stream_camera": 1,
                                         "profile.default_content_setting_values.geolocation": 0,
                                         "profile.default_content_setting_values.notifications": 1})
-
+        opt.add_argument('--ignore-gpu-blacklist')
         service = Service('/usr/bin/chromedriver')
         self.driver = webdriver.Chrome(service=service, options=opt)
         self.driver.get("https://www.reebuild.com")
